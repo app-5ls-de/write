@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
+  <title>Write</title>
+  <style>
+    body {
+      font-family: 'Lora', serif;
+    }
+
+    #editor {
+      padding: 4rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="editor" id="editor"></div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@2.22.0/dist/editor.js"></script>
+
+  <script>
+    function parse(str) {
+      let result
+      try {
+       result =  JSON.parse(str);
+      } catch (e) {
+        result= {}
+      }
+      return result;
+    }
+
+
+    const editor = new EditorJS({
+      holder: 'editor',
+      data: parse(localStorage.getItem('editor')),
+      onChange: () => {
+        editor.save().then((data) => {
+          localStorage.setItem('editor', JSON.stringify(data));
+        }).catch(console.error);
+      },
+      autofocus: true,
+      placeholder: 'Write...',
+    });
+
+  </script>
+
+
+</body>
+</html>
