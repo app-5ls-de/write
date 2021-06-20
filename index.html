@@ -1,53 +1,61 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
-  <title>Write</title>
-  <style>
-    body {
-      font-family: 'Lora', serif;
-    }
-
-    #editor {
-      padding: 4rem;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="editor" id="editor"></div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@2.22.0/dist/editor.js"></script>
-
-  <script>
-    function parse(str) {
-      let result
-      try {
-       result =  JSON.parse(str);
-      } catch (e) {
-        result= {}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/easymde@2.15.0/dist/easymde.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.css"
+      rel="stylesheet"
+    />
+    <title>Write</title>
+    <style>
+      body {
+        font-family: "Lora", serif;
+        min-height: 100vh;
+        margin: 0;
       }
-      return result;
-    }
 
+      .EasyMDEContainer {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        height: ;
+        min-height: 100vh;
+      }
 
-    const editor = new EditorJS({
-      holder: 'editor',
-      data: parse(localStorage.getItem('editor')),
-      onChange: () => {
-        editor.save().then((data) => {
-          localStorage.setItem('editor', JSON.stringify(data));
-        }).catch(console.error);
-      },
-      autofocus: true,
-      placeholder: 'Write...',
-    });
+      .CodeMirror {
+        flex-grow: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="editor"></textarea>
 
-  </script>
-
-
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/easymde@2.15.0/dist/easymde.min.js"></script>
+    <script>
+      const editor = new EasyMDE({
+        autofocus: true,
+        element: document.getElementById("editor"),
+        autosave: {
+          enabled: true,
+          uniqueId: "editor",
+          delay: 1000,
+        },
+        placeholder: "Write...",
+        spellChecker: false,
+        autoDownloadFontAwesome: false,
+        nativeSpellcheck: false,
+        toolbar: false,
+      });
+    </script>
+  </body>
 </html>
